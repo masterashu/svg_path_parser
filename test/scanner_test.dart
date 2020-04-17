@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:string_scanner/string_scanner.dart';
 import 'package:svg_path_parser/svg_path_parser.dart';
 import 'package:flutter_test/flutter_test.dart';
