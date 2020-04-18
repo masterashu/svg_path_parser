@@ -1,6 +1,6 @@
 # svg_path_parser
+![Pub Version (including pre-releases)](https://img.shields.io/pub/v/svg_path_parser?include_prereleases)
 ![Flutter Test package](https://github.com/masterashu/svg_path_parser/workflows/Flutter%20Test%20package/badge.svg)
-
 
 A Flutter/Dart utility to parse an SVG path into a equivalent Path object from `dart:ui` library.
 
