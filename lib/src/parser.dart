@@ -240,7 +240,8 @@ class Parser {
       this.path.cubicTo(cp.dx, cp.dy, x2, y2, x, y);
       _currentPoint = Offset(x, y);
     } else {
-      this.path.cubicTo(cp.dx - _currentPoint.dx, cp.dy - _currentPoint.dy, x2, y2, x, y);
+      this.path.cubicTo(
+          cp.dx - _currentPoint.dx, cp.dy - _currentPoint.dy, x2, y2, x, y);
       _currentPoint.translate(x, y);
     }
 
@@ -285,7 +286,8 @@ class Parser {
       this.path.quadraticBezierTo(cp.dx, cp.dy, x, y);
       _currentPoint = Offset(x, y);
     } else {
-      this.path.relativeQuadraticBezierTo(cp.dx - _currentPoint.dx, cp.dy - _currentPoint.dy, x, y);
+      this.path.relativeQuadraticBezierTo(
+          cp.dx - _currentPoint.dx, cp.dy - _currentPoint.dy, x, y);
       _currentPoint.translate(x, y);
     }
 
@@ -308,11 +310,17 @@ class Parser {
 
     if (commandToken.coordinateType == CoordinateType.absolute) {
       this.path.arcToPoint(Offset(x, y),
-          radius: Radius.elliptical(rx, ry), rotation: theta, largeArc: fa, clockwise: fb);
+          radius: Radius.elliptical(rx, ry),
+          rotation: theta,
+          largeArc: fa,
+          clockwise: fb);
       _currentPoint = Offset(x, y);
     } else {
       this.path.relativeArcToPoint(Offset(x, y),
-          radius: Radius.elliptical(rx, ry), rotation: theta, largeArc: fa, clockwise: fb);
+          radius: Radius.elliptical(rx, ry),
+          rotation: theta,
+          largeArc: fa,
+          clockwise: fb);
       _currentPoint.translate(x, y);
     }
 
@@ -324,13 +332,15 @@ class Parser {
   Offset _calculateCubicControlPoint() {
     if (_lastCommand.type == TokenType.curveTo) {
       if (_lastCommand.coordinateType == CoordinateType.absolute) {
-        return _currentPoint + (_currentPoint - Offset(_lastCommandArgs[2], _lastCommandArgs[3]));
+        return _currentPoint +
+            (_currentPoint - Offset(_lastCommandArgs[2], _lastCommandArgs[3]));
       } else {
         return _currentPoint - Offset(_lastCommandArgs[2], _lastCommandArgs[3]);
       }
     } else if (_lastCommand.type == TokenType.smoothCurveTo) {
       if (_lastCommand.coordinateType == CoordinateType.absolute) {
-        return _currentPoint + (_currentPoint - Offset(_lastCommandArgs[0], _lastCommandArgs[1]));
+        return _currentPoint +
+            (_currentPoint - Offset(_lastCommandArgs[0], _lastCommandArgs[1]));
       } else {
         return _currentPoint - Offset(_lastCommandArgs[0], _lastCommandArgs[1]);
       }
@@ -343,13 +353,15 @@ class Parser {
   Offset _calculateQuadraticControlPoint() {
     if (_lastCommand.type == TokenType.quadraticBezierCurveTo) {
       if (_lastCommand.coordinateType == CoordinateType.absolute) {
-        return _currentPoint + (_currentPoint - Offset(_lastCommandArgs[0], _lastCommandArgs[1]));
+        return _currentPoint +
+            (_currentPoint - Offset(_lastCommandArgs[0], _lastCommandArgs[1]));
       } else {
         return _currentPoint - Offset(_lastCommandArgs[1], _lastCommandArgs[0]);
       }
     } else if (_lastCommand.type == TokenType.smoothQuadraticBezierCurveTo) {
       if (_lastCommand.coordinateType == CoordinateType.absolute) {
-        return _currentPoint + (_currentPoint - Offset(_lastCommandArgs[0], _lastCommandArgs[1]));
+        return _currentPoint +
+            (_currentPoint - Offset(_lastCommandArgs[0], _lastCommandArgs[1]));
       } else {
         return _currentPoint - Offset(_lastCommandArgs[0], _lastCommandArgs[1]);
       }
