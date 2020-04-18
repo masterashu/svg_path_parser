@@ -46,7 +46,8 @@ class Scanner {
 
   /// The [RegExp] pattern to match a valid non-negative float value. Allowed float
   /// values include starting with decimal (.3) and exponent notation (1.3e+4).
-  static final nonNegativeFloatPattern = RegExp(r'[+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?');
+  static final nonNegativeFloatPattern =
+      RegExp(r'[+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?');
 
   /// The [RegExp] pattern to match a boolean flag (`1` or `0`).
   static final flagPattern = RegExp(r'(0|1)(?=[,\s])');
@@ -77,7 +78,9 @@ class Scanner {
 
   /// returns the [CoordinateType] based on the case of a character
   CoordinateType _coordinateType(char) {
-    return _isLowerChar(char) ? CoordinateType.relative : CoordinateType.absolute;
+    return _isLowerChar(char)
+        ? CoordinateType.relative
+        : CoordinateType.absolute;
   }
 
   bool _isWhitespaceAt(int offset) {
@@ -238,7 +241,8 @@ class Scanner {
   }
 
   /// Fetch a float value.
-  _fetchFloatValue() => _tokens.add(ValueToken(TokenType.value, _scanFloatValue()));
+  _fetchFloatValue() =>
+      _tokens.add(ValueToken(TokenType.value, _scanFloatValue()));
 
   /// Fetch a non-negative float value.
   _fetchNonNegativeFloatValue() {
@@ -338,9 +342,11 @@ class Scanner {
     if (char == LETTER_H || char == LETTER_h) return TokenType.horizontalLineTo;
     if (char == LETTER_L || char == LETTER_l) return TokenType.lineTo;
     if (char == LETTER_M || char == LETTER_m) return TokenType.moveTo;
-    if (char == LETTER_Q || char == LETTER_q) return TokenType.quadraticBezierCurveTo;
+    if (char == LETTER_Q || char == LETTER_q)
+      return TokenType.quadraticBezierCurveTo;
     if (char == LETTER_S || char == LETTER_s) return TokenType.smoothCurveTo;
-    if (char == LETTER_T || char == LETTER_t) return TokenType.smoothQuadraticBezierCurveTo;
+    if (char == LETTER_T || char == LETTER_t)
+      return TokenType.smoothQuadraticBezierCurveTo;
     if (char == LETTER_V || char == LETTER_v) return TokenType.verticalLineTo;
     if (char == LETTER_Z || char == LETTER_z) return TokenType.closePath;
   }
