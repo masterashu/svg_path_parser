@@ -6,11 +6,26 @@ A Flutter/Dart utility to parse an SVG path into a equivalent Path object from `
 
 ## Getting Started
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+Add this to your package's **pubspec.yaml** file:
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+```yaml
+dependencies:
+  svg_path_parse: ^0.1.0
+```
+
+Now in your Dart code, you can use:
+
+```dart
+import 'package:svg_path_parser/svg_path_parser.dart';
+```
+
+You can use `parseSvgPath()` to parse a valid SVG path string to [Path](https://api.flutter.dev/flutter/dart-ui/Path-class.html) object;
+
+```dart
+Path path = parseSvgPath('m.29 47.85 14.58 14.57 62.2-62.2h-29.02z');
+```
+
+## Examples
+View the [example](https://github.com/masterashu/svg_path_parser/tree/master/example) 
+folder to see an example (drawing flutter logo using svg paths).
+
