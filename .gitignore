@@ -1,3 +1,6 @@
+# Ignore pubspec.lock for packages
+/pubspec.lock
+
 # Miscellaneous
 *.class
 *.log
