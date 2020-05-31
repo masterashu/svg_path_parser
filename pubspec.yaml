@@ -2,7 +2,7 @@ name: svg_path_parser
 description: >
   A Flutter/Dart utility to parse an SVG path into a
   equivalent Path object from dart:ui library.
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/masterashu/svg_path_parser
 repository: https://github.com/masterashu/svg_path_parser
 issue_tracker: https://github.com/masterashu/svg_path_parser/issues
