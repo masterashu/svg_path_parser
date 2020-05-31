@@ -1,6 +1,6 @@
 # svg_path_parser
-![Pub Version (including pre-releases)](https://img.shields.io/pub/v/svg_path_parser?include_prereleases)
-![Flutter Test package](https://github.com/masterashu/svg_path_parser/workflows/Flutter%20Test%20package/badge.svg)
+[![Pub Version (including pre-releases)](https://img.shields.io/pub/v/svg_path_parser?include_prereleases)](https://pub.dev/packages/svg_path_parser)
+[![Flutter Test package](https://github.com/masterashu/svg_path_parser/workflows/Flutter%20Test%20package/badge.svg)](https://github.com/masterashu/svg_path_parser/actions)
 
 A Flutter/Dart utility to parse an SVG path into a equivalent Path object from `dart:ui` library.
 
@@ -10,7 +10,7 @@ Add this to your package's **pubspec.yaml** file:
 
 ```yaml
 dependencies:
-  svg_path_parse: ^0.1.0
+  svg_path_parse: ^0.1.1
 ```
 
 Now in your Dart code, you can use:

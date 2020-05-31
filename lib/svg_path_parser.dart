@@ -8,6 +8,14 @@ export 'src/scanner.dart';
 export 'src/parser.dart';
 
 /// A wrapper to quickly parse a Svg path.
-Path parseSvgPath(String source) {
-  return Parser(source).parse();
+Path parseSvgPath(String source, {bool failSilently = false}) {
+  try {
+    return Parser(source).parse();
+  } catch (e) {
+    if (!failSilently) {
+      rethrow;
+    } else {
+      return Path();
+    }
+  }
 }
