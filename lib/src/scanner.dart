@@ -78,9 +78,7 @@ class Scanner {
 
   /// returns the [CoordinateType] based on the case of a character
   CoordinateType _coordinateType(char) {
-    return _isLowerChar(char)
-        ? CoordinateType.relative
-        : CoordinateType.absolute;
+    return _isLowerChar(char) ? CoordinateType.relative : CoordinateType.absolute;
   }
 
   bool _isWhitespaceAt(int offset) {
@@ -121,19 +119,17 @@ class Scanner {
   /// Creates a [Scanner] that scans [source].
   ///
   /// [source] cannot be `null`.
-  Scanner(String source) : _scanner = StringScanner(source) {
-    if (source == null) throw ArgumentError.notNull('source');
-  }
+  Scanner(String source) : _scanner = StringScanner(source);
 
   /// Consumes and returns the next token.
-  Token scan() {
+  Token? scan() {
     if (_streamEndProduced) return null;
     if (_tokens.isEmpty) _fetchNextToken();
     return _tokens.removeFirst();
   }
 
   /// Returns the next token without consuming it.
-  Token peek() {
+  Token? peek() {
     if (_streamEndProduced) return null;
     if (_tokens.isEmpty) _fetchNextToken();
     return _tokens.first;
@@ -241,8 +237,7 @@ class Scanner {
   }
 
   /// Fetch a float value.
-  _fetchFloatValue() =>
-      _tokens.add(ValueToken(TokenType.value, _scanFloatValue()));
+  _fetchFloatValue() => _tokens.add(ValueToken(TokenType.value, _scanFloatValue()));
 
   /// Fetch a non-negative float value.
   _fetchNonNegativeFloatValue() {
@@ -307,6 +302,7 @@ class Scanner {
 
   /// Fetch a single float value
   _fetchSingleCoordinate() {
+    _skipWhitespace();
     _fetchFloatValue();
     _skipWhitespace();
   }
@@ -342,8 +338,7 @@ class Scanner {
     if (char == LETTER_H || char == LETTER_h) return TokenType.horizontalLineTo;
     if (char == LETTER_L || char == LETTER_l) return TokenType.lineTo;
     if (char == LETTER_M || char == LETTER_m) return TokenType.moveTo;
-    if (char == LETTER_Q || char == LETTER_q)
-      return TokenType.quadraticBezierCurveTo;
+    if (char == LETTER_Q || char == LETTER_q) return TokenType.quadraticBezierCurveTo;
     if (char == LETTER_S || char == LETTER_s) return TokenType.smoothCurveTo;
     if (char == LETTER_T || char == LETTER_t)
       return TokenType.smoothQuadraticBezierCurveTo;
@@ -352,10 +347,10 @@ class Scanner {
   }
 
   /// scans the source and generates a [ValueToken].
-  double _scanFloatValue() {
+  double? _scanFloatValue() {
     if (_scanner.matches(floatPattern)) {
       _scanner.scan(floatPattern);
-      return double.parse(_scanner.lastMatch.group(0));
+      return double.parse(_scanner.lastMatch!.group(0)!);
     } else {
       _expectedFloatValue();
     }
@@ -364,10 +359,10 @@ class Scanner {
 
   /// scans the source and generates a [ValueToken].
 
-  double _scanNonNegativeFloatValue() {
+  double? _scanNonNegativeFloatValue() {
     if (_scanner.matches(nonNegativeFloatPattern)) {
       _scanner.scan(nonNegativeFloatPattern);
-      return double.parse(_scanner.lastMatch.group(0));
+      return double.parse(_scanner.lastMatch!.group(0)!);
     } else {
       _expectedNonNegativeFloatValue();
     }
@@ -377,7 +372,7 @@ class Scanner {
   /// scans the source and generates a [ValueToken] having [TokenType.flag].
   _scanFlag() {
     if (_scanner.scan(flagPattern)) {
-      return int.parse(_scanner.lastMatch.group(0));
+      return int.parse(_scanner.lastMatch!.group(0)!);
     } else {
       _expectedZeroOneValue();
     }

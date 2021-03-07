@@ -11,7 +11,7 @@ class Token {
 
   @override
   bool operator ==(other) {
-    return this.type == other.type;
+    return (other is Token) && this.type == other.type;
   }
 
   @override
@@ -36,8 +36,7 @@ class CommandToken implements Token {
   @override
   bool operator ==(other) {
     if (other is CommandToken) {
-      return this.type == other.type &&
-          this.coordinateType == other.coordinateType;
+      return this.type == other.type && this.coordinateType == other.coordinateType;
     }
     return false;
   }
@@ -52,7 +51,7 @@ class ValueToken implements Token {
   final TokenType type;
 
   /// The value of the argument
-  final dynamic value;
+  final Object? value;
 
   ValueToken(this.type, this.value);
 

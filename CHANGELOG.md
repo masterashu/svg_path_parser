@@ -1,3 +1,9 @@
+## [1.0.0] - 7-March-2021
+
+* Added null safety support
+* Fixed unable to parse the sequence `H 4` and similar. [issue](https://github.com/masterashu/svg_path_parser/issues/3)
+* Fix Typo in README
+
 ## [0.1.1] - 31-May-2020
 
 * Added flag failSilently to [parseSvgPath](https://pub.dev/documentation/svg_path_parser/latest/svg_path_parser/parseSvgPath.html)

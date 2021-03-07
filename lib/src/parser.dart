@@ -15,7 +15,7 @@ class Parser {
         _lastCommandArgs = [];
 
   /// Last command Parsed
-  CommandToken _lastCommand;
+  late CommandToken _lastCommand;
 
   /// List of Arguments of Previous Command
   List<dynamic> _lastCommandArgs;
@@ -37,7 +37,7 @@ class Parser {
     // Scan streamStart Token
     _parseStreamStart();
 
-    while (_scanner.peek().type != TokenType.streamEnd) {
+    while (_scanner.peek()!.type != TokenType.streamEnd) {
       _parseCommand();
     }
 
@@ -58,7 +58,7 @@ class Parser {
 
   /// Parses a SVG path Command.
   _parseCommand() {
-    var token = _scanner.peek();
+    Token token = _scanner.peek()!;
     // If extra arguments are encountered. Use the last command.
     if (!(token is CommandToken)) {
       // Subsequent pairs after first Move to are considered as implicit
@@ -69,39 +69,39 @@ class Parser {
         token = _lastCommand;
       }
     } else {
-      token = _scanner.scan();
+      token = _scanner.scan()!;
     }
 
     switch (token.type) {
       case TokenType.moveTo:
-        _parseMoveTo(token);
+        _parseMoveTo(token as CommandToken);
         return;
       case TokenType.closePath:
-        _parseClosePath(token);
+        _parseClosePath(token as CommandToken);
         return;
       case TokenType.lineTo:
-        _parseLineTo(token);
+        _parseLineTo(token as CommandToken);
         return;
       case TokenType.horizontalLineTo:
-        _parseHorizontalLineTo(token);
+        _parseHorizontalLineTo(token as CommandToken);
         return;
       case TokenType.verticalLineTo:
-        _parseVerticalLineTo(token);
+        _parseVerticalLineTo(token as CommandToken);
         return;
       case TokenType.curveTo:
-        _parseCurveTo(token);
+        _parseCurveTo(token as CommandToken);
         return;
       case TokenType.smoothCurveTo:
-        _parseSmoothCurveTo(token);
+        _parseSmoothCurveTo(token as CommandToken);
         return;
       case TokenType.quadraticBezierCurveTo:
-        _parseQuadraticBezierCurveTo(token);
+        _parseQuadraticBezierCurveTo(token as CommandToken);
         return;
       case TokenType.smoothQuadraticBezierCurveTo:
-        _parseSmoothQuadraticBezierCurveTo(token);
+        _parseSmoothQuadraticBezierCurveTo(token as CommandToken);
         return;
       case TokenType.ellipticalArcTo:
-        _parseEllipticalArcTo(token);
+        _parseEllipticalArcTo(token as CommandToken);
         return;
       default:
         return;
@@ -113,14 +113,14 @@ class Parser {
   /// move-to-args: x, y            (absolute)
   /// move-to-args: dx, dy          (relative)
   _parseMoveTo(CommandToken commandToken) {
-    var x = (_scanner.scan() as ValueToken).value;
-    var y = (_scanner.scan() as ValueToken).value;
+    var x = (_scanner.scan()! as ValueToken).value;
+    var y = (_scanner.scan()! as ValueToken).value;
 
     if (commandToken.coordinateType == CoordinateType.absolute) {
-      this.path.moveTo(x, y);
+      this.path.moveTo(x as double, y as double);
       _currentPoint = Offset(x, y);
     } else {
-      this.path.relativeMoveTo(x, y);
+      this.path.relativeMoveTo(x as double, y as double);
       _currentPoint.translate(x, y);
     }
     // moveTo command reset the initial and current point
@@ -145,14 +145,14 @@ class Parser {
   /// line-to-args: x, y            (absolute)
   /// line-to-args: dx, dy          (relative)
   _parseLineTo(CommandToken commandToken) {
-    var x = (_scanner.scan() as ValueToken).value;
-    var y = (_scanner.scan() as ValueToken).value;
+    var x = (_scanner.scan()! as ValueToken).value;
+    var y = (_scanner.scan()! as ValueToken).value;
 
     if (commandToken.coordinateType == CoordinateType.absolute) {
-      this.path.lineTo(x, y);
+      this.path.lineTo(x as double, y as double);
       _currentPoint = Offset(x, y);
     } else {
-      this.path.relativeLineTo(x, y);
+      this.path.relativeLineTo(x as double, y as double);
       _currentPoint.translate(x, y);
     }
 
@@ -165,14 +165,14 @@ class Parser {
   /// horizontal-line-to-args: x     (absolute)
   /// horizontal-line-to-args: dx    (relative)
   _parseHorizontalLineTo(CommandToken commandToken) {
-    var h = (_scanner.scan() as ValueToken).value;
+    var h = (_scanner.scan()! as ValueToken).value;
     var y = _currentPoint.dy;
 
     if (commandToken.coordinateType == CoordinateType.absolute) {
-      this.path.lineTo(h, y);
+      this.path.lineTo(h as double, y);
       _currentPoint = Offset(h, y);
     } else {
-      this.path.relativeLineTo(h, 0);
+      this.path.relativeLineTo(h as double, 0);
       _currentPoint.translate(h, 0);
     }
 
@@ -185,14 +185,14 @@ class Parser {
   /// vertical-line-to-args: y        (absolute)
   /// vertical-line-to-args: dy       (relative)
   _parseVerticalLineTo(CommandToken commandToken) {
-    var v = (_scanner.scan() as ValueToken).value;
+    var v = (_scanner.scan()! as ValueToken).value;
     var x = _currentPoint.dx;
 
     if (commandToken.coordinateType == CoordinateType.absolute) {
-      this.path.lineTo(x, v);
+      this.path.lineTo(x, v as double);
       _currentPoint = Offset(x, v);
     } else {
-      this.path.relativeLineTo(0, v);
+      this.path.relativeLineTo(0, v as double);
       _currentPoint.translate(0, v);
     }
 
@@ -205,18 +205,20 @@ class Parser {
   /// curve-to-args: x1,y1 x2,y2 x,y        (absolute)
   /// curve-to-args: dx1,dy1 dx2,dy2 dx,dy  (relative)
   _parseCurveTo(CommandToken commandToken) {
-    var x1 = (_scanner.scan() as ValueToken).value;
-    var y1 = (_scanner.scan() as ValueToken).value;
-    var x2 = (_scanner.scan() as ValueToken).value;
-    var y2 = (_scanner.scan() as ValueToken).value;
-    var x = (_scanner.scan() as ValueToken).value;
-    var y = (_scanner.scan() as ValueToken).value;
+    var x1 = (_scanner.scan()! as ValueToken).value;
+    var y1 = (_scanner.scan()! as ValueToken).value;
+    var x2 = (_scanner.scan()! as ValueToken).value;
+    var y2 = (_scanner.scan()! as ValueToken).value;
+    var x = (_scanner.scan()! as ValueToken).value;
+    var y = (_scanner.scan()! as ValueToken).value;
 
     if (commandToken.coordinateType == CoordinateType.absolute) {
-      this.path.cubicTo(x1, y1, x2, y2, x, y);
+      this.path.cubicTo(x1 as double, y1 as double, x2 as double, y2 as double,
+          x as double, y as double);
       _currentPoint = Offset(x, y);
     } else {
-      this.path.relativeCubicTo(x1, y1, x2, y2, x, y);
+      this.path.relativeCubicTo(x1 as double, y1 as double, x2 as double, y2 as double,
+          x as double, y as double);
       _currentPoint.translate(x, y);
     }
 
@@ -229,19 +231,21 @@ class Parser {
   /// smooth-curve-to-args: x1,y1 x,y        (absolute)
   /// smooth-curve-to-args: dx1,dy1 dx,dy    (relative)
   _parseSmoothCurveTo(CommandToken commandToken) {
-    var x2 = (_scanner.scan() as ValueToken).value;
-    var y2 = (_scanner.scan() as ValueToken).value;
-    var x = (_scanner.scan() as ValueToken).value;
-    var y = (_scanner.scan() as ValueToken).value;
+    var x2 = (_scanner.scan()! as ValueToken).value;
+    var y2 = (_scanner.scan()! as ValueToken).value;
+    var x = (_scanner.scan()! as ValueToken).value;
+    var y = (_scanner.scan()! as ValueToken).value;
     // Calculate the first control point
     var cp = _calculateCubicControlPoint();
 
     if (commandToken.coordinateType == CoordinateType.absolute) {
-      this.path.cubicTo(cp.dx, cp.dy, x2, y2, x, y);
+      this
+          .path
+          .cubicTo(cp.dx, cp.dy, x2 as double, y2 as double, x as double, y as double);
       _currentPoint = Offset(x, y);
     } else {
-      this.path.cubicTo(
-          cp.dx - _currentPoint.dx, cp.dy - _currentPoint.dy, x2, y2, x, y);
+      this.path.cubicTo(cp.dx - _currentPoint.dx, cp.dy - _currentPoint.dy,
+          x2 as double, y2 as double, x as double, y as double);
       _currentPoint.translate(x, y);
     }
 
@@ -255,16 +259,17 @@ class Parser {
   /// quadratic-curve-to-args: x1,y1 x,y        (absolute)
   /// quadratic-curve-to-args: dx1,dy1 dx,dy    (relative)
   _parseQuadraticBezierCurveTo(CommandToken commandToken) {
-    var x1 = (_scanner.scan() as ValueToken).value;
-    var y1 = (_scanner.scan() as ValueToken).value;
-    var x = (_scanner.scan() as ValueToken).value;
-    var y = (_scanner.scan() as ValueToken).value;
+    var x1 = (_scanner.scan()! as ValueToken).value;
+    var y1 = (_scanner.scan()! as ValueToken).value;
+    var x = (_scanner.scan()! as ValueToken).value;
+    var y = (_scanner.scan()! as ValueToken).value;
 
     if (commandToken.coordinateType == CoordinateType.absolute) {
-      this.path.quadraticBezierTo(x1, y1, x, y);
+      this.path.quadraticBezierTo(x1 as double, y1 as double, x as double, y as double);
       _currentPoint = Offset(x, y);
     } else {
-      this.path.relativeQuadraticBezierTo(x1, y1, x, y);
+      this.path.relativeQuadraticBezierTo(
+          x1 as double, y1 as double, x as double, y as double);
       _currentPoint.translate(x, y);
     }
 
@@ -277,17 +282,17 @@ class Parser {
   /// smooth-quadratic-curve-to-args: x,y         (absolute)
   /// smooth-quadratic-curve-to-args: dx,dy       (relative)
   _parseSmoothQuadraticBezierCurveTo(CommandToken commandToken) {
-    var x = (_scanner.scan() as ValueToken).value;
-    var y = (_scanner.scan() as ValueToken).value;
+    var x = (_scanner.scan()! as ValueToken).value;
+    var y = (_scanner.scan()! as ValueToken).value;
     // Calculate the control point
     var cp = _calculateQuadraticControlPoint();
 
     if (commandToken.coordinateType == CoordinateType.absolute) {
-      this.path.quadraticBezierTo(cp.dx, cp.dy, x, y);
+      this.path.quadraticBezierTo(cp.dx, cp.dy, x as double, y as double);
       _currentPoint = Offset(x, y);
     } else {
       this.path.relativeQuadraticBezierTo(
-          cp.dx - _currentPoint.dx, cp.dy - _currentPoint.dy, x, y);
+          cp.dx - _currentPoint.dx, cp.dy - _currentPoint.dy, x as double, y as double);
       _currentPoint.translate(x, y);
     }
 
@@ -300,25 +305,25 @@ class Parser {
   /// smooth-curve-to-args: rx ry x-axis-rotation large-arc-flag sweep-flag x y     (absolute)
   /// smooth-curve-to-args: rx ry x-axis-rotation large-arc-flag sweep-flag dx dy   (relative)
   _parseEllipticalArcTo(CommandToken commandToken) {
-    var rx = (_scanner.scan() as ValueToken).value;
-    var ry = (_scanner.scan() as ValueToken).value;
-    var theta = (_scanner.scan() as ValueToken).value;
-    var fa = (_scanner.scan() as ValueToken).value == 1;
-    var fb = (_scanner.scan() as ValueToken).value == 1;
-    var x = (_scanner.scan() as ValueToken).value;
-    var y = (_scanner.scan() as ValueToken).value;
+    var rx = (_scanner.scan()! as ValueToken).value;
+    var ry = (_scanner.scan()! as ValueToken).value;
+    var theta = (_scanner.scan()! as ValueToken).value;
+    var fa = (_scanner.scan()! as ValueToken).value == 1;
+    var fb = (_scanner.scan()! as ValueToken).value == 1;
+    var x = (_scanner.scan()! as ValueToken).value;
+    var y = (_scanner.scan()! as ValueToken).value;
 
     if (commandToken.coordinateType == CoordinateType.absolute) {
-      this.path.arcToPoint(Offset(x, y),
-          radius: Radius.elliptical(rx, ry),
-          rotation: theta,
+      this.path.arcToPoint(Offset(x as double, y as double),
+          radius: Radius.elliptical(rx as double, ry as double),
+          rotation: theta as double,
           largeArc: fa,
           clockwise: fb);
       _currentPoint = Offset(x, y);
     } else {
-      this.path.relativeArcToPoint(Offset(x, y),
-          radius: Radius.elliptical(rx, ry),
-          rotation: theta,
+      this.path.relativeArcToPoint(Offset(x as double, y as double),
+          radius: Radius.elliptical(rx as double, ry as double),
+          rotation: theta as double,
           largeArc: fa,
           clockwise: fb);
       _currentPoint.translate(x, y);

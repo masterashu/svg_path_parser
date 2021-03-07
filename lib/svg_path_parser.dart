@@ -1,6 +1,6 @@
 library svg_path_parser;
 
-import 'package:svg_path_parser/src/parser.dart';
+import 'src/parser.dart';
 import 'dart:ui';
 
 export 'src/tokens.dart';
