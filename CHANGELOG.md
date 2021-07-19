@@ -1,3 +1,9 @@
+## [1.1.0] - 19-July-2021
+
+* Fixed an issue where using an absolute command after 
+  a relative command will lead to wrong parsing behavior.  
+  See details here: [issue#6](https://github.com/masterashu/svg_path_parser/issues/6)
+
 ## [1.0.0] - 7-March-2021
 
 * Added null safety support

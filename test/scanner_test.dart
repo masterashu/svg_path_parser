@@ -14,36 +14,42 @@ main() {
     group("closePath command", () {
       test("closePath command scanned correctly", () {
         var scanner = Scanner('Z,z')..scan();
-        expect(
-            scanner.scan(), CommandToken(TokenType.closePath, CoordinateType.absolute));
-        expect(
-            scanner.scan(), CommandToken(TokenType.closePath, CoordinateType.relative));
+        expect(scanner.scan(),
+            CommandToken(TokenType.closePath, CoordinateType.absolute));
+        expect(scanner.scan(),
+            CommandToken(TokenType.closePath, CoordinateType.relative));
       });
     });
 
     group("moveTo command", () {
       test("moveTo command scanned correctly", () {
         var scanner = Scanner('M10,20')..scan();
-        expect(scanner.scan(), CommandToken(TokenType.moveTo, CoordinateType.absolute));
+        expect(scanner.scan(),
+            CommandToken(TokenType.moveTo, CoordinateType.absolute));
       });
 
       test("relativeMoveTo command scanned correctly", () {
         var scanner = Scanner('m10,20')..scan();
-        expect(scanner.scan(), CommandToken(TokenType.moveTo, CoordinateType.relative));
+        expect(scanner.scan(),
+            CommandToken(TokenType.moveTo, CoordinateType.relative));
       });
 
       test("moveTo missing/incomplete args", () {
         var scanner = Scanner('m')..scan();
-        expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+        expect(() => scanner.scan(),
+            throwsA(isInstanceOf<StringScannerException>()));
         scanner = Scanner('m10')..scan();
-        expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+        expect(() => scanner.scan(),
+            throwsA(isInstanceOf<StringScannerException>()));
         scanner = Scanner('m10,20,30')..scan();
-        expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+        expect(() => scanner.scan(),
+            throwsA(isInstanceOf<StringScannerException>()));
       });
 
       test("moveTo scan extra args", () {
         var scanner = Scanner('m1,1 2,4')..scan();
-        expect(scanner.scan(), CommandToken(TokenType.moveTo, CoordinateType.relative));
+        expect(scanner.scan(),
+            CommandToken(TokenType.moveTo, CoordinateType.relative));
         expect(scanner.scan(), ValueToken(TokenType.value, 1.0));
         expect(scanner.scan(), ValueToken(TokenType.value, 1.0));
         expect(scanner.scan(), ValueToken(TokenType.value, 2.0));
@@ -54,26 +60,32 @@ main() {
     group("lineTo command", () {
       test("lineTo command scanned correctly", () {
         var scanner = Scanner('L10,20')..scan();
-        expect(scanner.scan(), CommandToken(TokenType.lineTo, CoordinateType.absolute));
+        expect(scanner.scan(),
+            CommandToken(TokenType.lineTo, CoordinateType.absolute));
       });
 
       test("relativeLineTo command scanned correctly", () {
         var scanner = Scanner('l10,20')..scan();
-        expect(scanner.scan(), CommandToken(TokenType.lineTo, CoordinateType.relative));
+        expect(scanner.scan(),
+            CommandToken(TokenType.lineTo, CoordinateType.relative));
       });
 
       test("lineTo missing/incomplete args", () {
         var scanner = Scanner('l')..scan();
-        expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+        expect(() => scanner.scan(),
+            throwsA(isInstanceOf<StringScannerException>()));
         scanner = Scanner('l10')..scan();
-        expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+        expect(() => scanner.scan(),
+            throwsA(isInstanceOf<StringScannerException>()));
         scanner = Scanner('l10,20,30')..scan();
-        expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+        expect(() => scanner.scan(),
+            throwsA(isInstanceOf<StringScannerException>()));
       });
 
       test("lineTo scan extra args", () {
         var scanner = Scanner('l1,1 2,4')..scan();
-        expect(scanner.scan(), CommandToken(TokenType.lineTo, CoordinateType.relative));
+        expect(scanner.scan(),
+            CommandToken(TokenType.lineTo, CoordinateType.relative));
         expect(scanner.scan(), ValueToken(TokenType.value, 1.0));
         expect(scanner.scan(), ValueToken(TokenType.value, 1.0));
         expect(scanner.scan(), ValueToken(TokenType.value, 2.0));
@@ -105,7 +117,8 @@ main() {
 
       test("horizontalTo missing/incomplete args", () {
         var scanner = Scanner('H')..scan();
-        expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+        expect(() => scanner.scan(),
+            throwsA(isInstanceOf<StringScannerException>()));
       });
 
       test("horizontalTo scan extra args", () {
@@ -134,7 +147,8 @@ main() {
 
       test("verticalTo missing/incomplete args", () {
         var scanner = Scanner('V')..scan();
-        expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+        expect(() => scanner.scan(),
+            throwsA(isInstanceOf<StringScannerException>()));
         scanner = Scanner('m10')..scan();
       });
 
@@ -150,8 +164,8 @@ main() {
     group("curveTo command", () {
       test("curveTo command scanned correctly", () {
         var scanner = Scanner('C10,10 20,20, 15,0')..scan();
-        expect(
-            scanner.scan(), CommandToken(TokenType.curveTo, CoordinateType.absolute));
+        expect(scanner.scan(),
+            CommandToken(TokenType.curveTo, CoordinateType.absolute));
         expect(scanner.scan(), ValueToken(TokenType.value, 10.0));
         expect(scanner.scan(), ValueToken(TokenType.value, 10.0));
         expect(scanner.scan(), ValueToken(TokenType.value, 20.0));
@@ -162,8 +176,8 @@ main() {
 
       test("relativeCurveTo command scanned correctly", () {
         var scanner = Scanner('c10,10 5,-5, -10,5')..scan();
-        expect(
-            scanner.scan(), CommandToken(TokenType.curveTo, CoordinateType.relative));
+        expect(scanner.scan(),
+            CommandToken(TokenType.curveTo, CoordinateType.relative));
         expect(scanner.scan(), ValueToken(TokenType.value, 10.0));
         expect(scanner.scan(), ValueToken(TokenType.value, 10.0));
         expect(scanner.scan(), ValueToken(TokenType.value, 5.0));
@@ -174,17 +188,21 @@ main() {
 
       test("curveTo missing/incomplete args", () {
         var scanner = Scanner('C 10,10')..scan();
-        expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+        expect(() => scanner.scan(),
+            throwsA(isInstanceOf<StringScannerException>()));
         scanner = Scanner('C 10,10 5,5')..scan();
-        expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+        expect(() => scanner.scan(),
+            throwsA(isInstanceOf<StringScannerException>()));
         scanner = Scanner('C 10,10, 20,20, 10,50, 10')..scan();
-        expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+        expect(() => scanner.scan(),
+            throwsA(isInstanceOf<StringScannerException>()));
       });
 
       test("curveTo scan extra args", () {
-        var scanner = Scanner('C 10,10, 20,20, 10,50, 20,20, 10,50, 34,55')..scan();
-        expect(
-            scanner.scan(), CommandToken(TokenType.curveTo, CoordinateType.absolute));
+        var scanner = Scanner('C 10,10, 20,20, 10,50, 20,20, 10,50, 34,55')
+          ..scan();
+        expect(scanner.scan(),
+            CommandToken(TokenType.curveTo, CoordinateType.absolute));
       });
     });
 
@@ -210,11 +228,14 @@ main() {
       });
       test("smoothCurveTo missing/incomplete args", () {
         var scanner = Scanner('s 10')..scan();
-        expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+        expect(() => scanner.scan(),
+            throwsA(isInstanceOf<StringScannerException>()));
         scanner = Scanner('s 10,10 5')..scan();
-        expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+        expect(() => scanner.scan(),
+            throwsA(isInstanceOf<StringScannerException>()));
         scanner = Scanner('S 10,10, 20,20, 10,50, 10')..scan();
-        expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+        expect(() => scanner.scan(),
+            throwsA(isInstanceOf<StringScannerException>()));
       });
 
       test("smoothCurveTo scan extra args", () {
@@ -227,8 +248,10 @@ main() {
     group("quadraticBezierCurveTo command", () {
       test("quadraticBezierCurveTo command scanned correctly", () {
         var scanner = Scanner('Q10,10 20,20')..scan();
-        expect(scanner.scan(),
-            CommandToken(TokenType.quadraticBezierCurveTo, CoordinateType.absolute));
+        expect(
+            scanner.scan(),
+            CommandToken(
+                TokenType.quadraticBezierCurveTo, CoordinateType.absolute));
         expect(scanner.scan(), ValueToken(TokenType.value, 10.0));
         expect(scanner.scan(), ValueToken(TokenType.value, 10.0));
         expect(scanner.scan(), ValueToken(TokenType.value, 20.0));
@@ -237,8 +260,10 @@ main() {
 
       test("relativeQuadraticBezierCurveTo command scanned correctly", () {
         var scanner = Scanner('q10,-5, -10,5')..scan();
-        expect(scanner.scan(),
-            CommandToken(TokenType.quadraticBezierCurveTo, CoordinateType.relative));
+        expect(
+            scanner.scan(),
+            CommandToken(
+                TokenType.quadraticBezierCurveTo, CoordinateType.relative));
         expect(scanner.scan(), ValueToken(TokenType.value, 10.0));
         expect(scanner.scan(), ValueToken(TokenType.value, -5.0));
         expect(scanner.scan(), ValueToken(TokenType.value, -10.0));
@@ -247,17 +272,22 @@ main() {
 
       test("quadraticBezierCurveTo missing/incomplete args", () {
         var scanner = Scanner('q 10')..scan();
-        expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+        expect(() => scanner.scan(),
+            throwsA(isInstanceOf<StringScannerException>()));
         scanner = Scanner('q 10,10 5')..scan();
-        expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+        expect(() => scanner.scan(),
+            throwsA(isInstanceOf<StringScannerException>()));
         scanner = Scanner('Q 10,10, 20,20, 10,50, 10')..scan();
-        expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+        expect(() => scanner.scan(),
+            throwsA(isInstanceOf<StringScannerException>()));
       });
 
       test("quadraticBezierCurveTo scan extra args", () {
         var scanner = Scanner('Q 10,10, 20,20, 10,50, 20,20')..scan();
-        expect(scanner.scan(),
-            CommandToken(TokenType.quadraticBezierCurveTo, CoordinateType.absolute));
+        expect(
+            scanner.scan(),
+            CommandToken(
+                TokenType.quadraticBezierCurveTo, CoordinateType.absolute));
       });
     });
 
@@ -266,35 +296,38 @@ main() {
         var scanner = Scanner('T10,10')..scan();
         expect(
             scanner.scan(),
-            CommandToken(
-                TokenType.smoothQuadraticBezierCurveTo, CoordinateType.absolute));
+            CommandToken(TokenType.smoothQuadraticBezierCurveTo,
+                CoordinateType.absolute));
         expect(scanner.scan(), ValueToken(TokenType.value, 10.0));
         expect(scanner.scan(), ValueToken(TokenType.value, 10.0));
       });
 
-      test("relativeSmoothQuadraticBezierCurveTo command scanned correctly", () {
+      test("relativeSmoothQuadraticBezierCurveTo command scanned correctly",
+          () {
         var scanner = Scanner('t10,5')..scan();
         expect(
             scanner.scan(),
-            CommandToken(
-                TokenType.smoothQuadraticBezierCurveTo, CoordinateType.relative));
+            CommandToken(TokenType.smoothQuadraticBezierCurveTo,
+                CoordinateType.relative));
         expect(scanner.scan(), ValueToken(TokenType.value, 10.0));
         expect(scanner.scan(), ValueToken(TokenType.value, 5.0));
       });
 
       test("smoothQuadraticBezierCurveTo missing/incomplete args", () {
         var scanner = Scanner('t 10')..scan();
-        expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+        expect(() => scanner.scan(),
+            throwsA(isInstanceOf<StringScannerException>()));
         scanner = Scanner('T 10,10 5')..scan();
-        expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+        expect(() => scanner.scan(),
+            throwsA(isInstanceOf<StringScannerException>()));
       });
 
       test("smoothQuadraticBezierCurveTo scan extra args", () {
         var scanner = Scanner('T 10,10, 20,20')..scan();
         expect(
             scanner.scan(),
-            CommandToken(
-                TokenType.smoothQuadraticBezierCurveTo, CoordinateType.absolute));
+            CommandToken(TokenType.smoothQuadraticBezierCurveTo,
+                CoordinateType.absolute));
       });
     });
 
@@ -327,20 +360,25 @@ main() {
 
       test("ellipticalArcTo missing/incomplete args", () {
         var scanner = Scanner('a 10')..scan();
-        expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+        expect(() => scanner.scan(),
+            throwsA(isInstanceOf<StringScannerException>()));
         scanner = Scanner('a 10,10 5')..scan();
-        expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+        expect(() => scanner.scan(),
+            throwsA(isInstanceOf<StringScannerException>()));
         scanner = Scanner('a10,10, 20 0,1 10 50,10 10')..scan();
-        expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+        expect(() => scanner.scan(),
+            throwsA(isInstanceOf<StringScannerException>()));
       });
 
       test("wrong flag argument", () {
         var scanner = Scanner('a10,10 5 0.1,1 -5')..scan();
-        expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+        expect(() => scanner.scan(),
+            throwsA(isInstanceOf<StringScannerException>()));
       });
 
       test("ellipticalArcTo scan extra args", () {
-        var scanner = Scanner('A 10,10, 20,0,1 10,50 5,60, 10,1,1 16,10')..scan();
+        var scanner = Scanner('A 10,10, 20,0,1 10,50 5,60, 10,1,1 16,10')
+          ..scan();
         expect(scanner.scan(),
             CommandToken(TokenType.ellipticalArcTo, CoordinateType.absolute));
       });
@@ -350,15 +388,18 @@ main() {
   group("test correct scan of commas", () {
     test("error on consecutive comma bewteen values", () {
       var scanner = Scanner('M 10,,10')..scan();
-      expect(() => scanner.scan(), throwsA(isInstanceOf<StringScannerException>()));
+      expect(() => scanner.scan(),
+          throwsA(isInstanceOf<StringScannerException>()));
     });
     test("allow consecutive comma bewteen/before commands", () {
       var scanner = Scanner('M10,10,,,z')..scan();
-      expect(scanner.scan(), CommandToken(TokenType.moveTo, CoordinateType.absolute));
+      expect(scanner.scan(),
+          CommandToken(TokenType.moveTo, CoordinateType.absolute));
     });
     test("allow consecutive comma at the end", () {
       var scanner = Scanner('M10,10,,,,')..scan();
-      expect(scanner.scan(), CommandToken(TokenType.moveTo, CoordinateType.absolute));
+      expect(scanner.scan(),
+          CommandToken(TokenType.moveTo, CoordinateType.absolute));
       expect(scanner.scan(), ValueToken(TokenType.value, 10.0));
       expect(scanner.scan(), ValueToken(TokenType.value, 10.0));
       expect(scanner.scan(), Token(TokenType.streamEnd));

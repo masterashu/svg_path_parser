@@ -42,7 +42,8 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Stack(
                 children: widget.paths.map((e) {
                   return CustomPaint(
-                      painter: MyPainter(parseSvgPath(e[0] as String), e[1] as Color,
+                      painter: MyPainter(
+                          parseSvgPath(e[0] as String), e[1] as Color,
                           showPath: showBorder));
                 }).toList(),
               ),

@@ -78,7 +78,9 @@ class Scanner {
 
   /// returns the [CoordinateType] based on the case of a character
   CoordinateType _coordinateType(char) {
-    return _isLowerChar(char) ? CoordinateType.relative : CoordinateType.absolute;
+    return _isLowerChar(char)
+        ? CoordinateType.relative
+        : CoordinateType.absolute;
   }
 
   bool _isWhitespaceAt(int offset) {
@@ -237,7 +239,8 @@ class Scanner {
   }
 
   /// Fetch a float value.
-  _fetchFloatValue() => _tokens.add(ValueToken(TokenType.value, _scanFloatValue()));
+  _fetchFloatValue() =>
+      _tokens.add(ValueToken(TokenType.value, _scanFloatValue()));
 
   /// Fetch a non-negative float value.
   _fetchNonNegativeFloatValue() {
@@ -338,7 +341,8 @@ class Scanner {
     if (char == LETTER_H || char == LETTER_h) return TokenType.horizontalLineTo;
     if (char == LETTER_L || char == LETTER_l) return TokenType.lineTo;
     if (char == LETTER_M || char == LETTER_m) return TokenType.moveTo;
-    if (char == LETTER_Q || char == LETTER_q) return TokenType.quadraticBezierCurveTo;
+    if (char == LETTER_Q || char == LETTER_q)
+      return TokenType.quadraticBezierCurveTo;
     if (char == LETTER_S || char == LETTER_s) return TokenType.smoothCurveTo;
     if (char == LETTER_T || char == LETTER_t)
       return TokenType.smoothQuadraticBezierCurveTo;

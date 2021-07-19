@@ -121,7 +121,7 @@ class Parser {
       _currentPoint = Offset(x, y);
     } else {
       this.path.relativeMoveTo(x as double, y as double);
-      _currentPoint.translate(x, y);
+      _currentPoint = _currentPoint.translate(x, y);
     }
     // moveTo command reset the initial and current point
     _initialPoint = _currentPoint;
@@ -153,7 +153,7 @@ class Parser {
       _currentPoint = Offset(x, y);
     } else {
       this.path.relativeLineTo(x as double, y as double);
-      _currentPoint.translate(x, y);
+      _currentPoint = _currentPoint.translate(x, y);
     }
 
     _lastCommand = commandToken;
@@ -173,7 +173,7 @@ class Parser {
       _currentPoint = Offset(h, y);
     } else {
       this.path.relativeLineTo(h as double, 0);
-      _currentPoint.translate(h, 0);
+      _currentPoint = _currentPoint.translate(h, 0);
     }
 
     _lastCommand = commandToken;
@@ -193,7 +193,7 @@ class Parser {
       _currentPoint = Offset(x, v);
     } else {
       this.path.relativeLineTo(0, v as double);
-      _currentPoint.translate(0, v);
+      _currentPoint = _currentPoint.translate(0, v);
     }
 
     _lastCommand = commandToken;
@@ -217,9 +217,9 @@ class Parser {
           x as double, y as double);
       _currentPoint = Offset(x, y);
     } else {
-      this.path.relativeCubicTo(x1 as double, y1 as double, x2 as double, y2 as double,
-          x as double, y as double);
-      _currentPoint.translate(x, y);
+      this.path.relativeCubicTo(x1 as double, y1 as double, x2 as double,
+          y2 as double, x as double, y as double);
+      _currentPoint = _currentPoint.translate(x, y);
     }
 
     _lastCommand = commandToken;
@@ -239,14 +239,13 @@ class Parser {
     var cp = _calculateCubicControlPoint();
 
     if (commandToken.coordinateType == CoordinateType.absolute) {
-      this
-          .path
-          .cubicTo(cp.dx, cp.dy, x2 as double, y2 as double, x as double, y as double);
+      this.path.cubicTo(
+          cp.dx, cp.dy, x2 as double, y2 as double, x as double, y as double);
       _currentPoint = Offset(x, y);
     } else {
       this.path.cubicTo(cp.dx - _currentPoint.dx, cp.dy - _currentPoint.dy,
           x2 as double, y2 as double, x as double, y as double);
-      _currentPoint.translate(x, y);
+      _currentPoint = _currentPoint.translate(x, y);
     }
 
     _lastCommand = commandToken;
@@ -265,12 +264,13 @@ class Parser {
     var y = (_scanner.scan()! as ValueToken).value;
 
     if (commandToken.coordinateType == CoordinateType.absolute) {
-      this.path.quadraticBezierTo(x1 as double, y1 as double, x as double, y as double);
+      this.path.quadraticBezierTo(
+          x1 as double, y1 as double, x as double, y as double);
       _currentPoint = Offset(x, y);
     } else {
       this.path.relativeQuadraticBezierTo(
           x1 as double, y1 as double, x as double, y as double);
-      _currentPoint.translate(x, y);
+      _currentPoint = _currentPoint.translate(x, y);
     }
 
     _lastCommand = commandToken;
@@ -291,9 +291,9 @@ class Parser {
       this.path.quadraticBezierTo(cp.dx, cp.dy, x as double, y as double);
       _currentPoint = Offset(x, y);
     } else {
-      this.path.relativeQuadraticBezierTo(
-          cp.dx - _currentPoint.dx, cp.dy - _currentPoint.dy, x as double, y as double);
-      _currentPoint.translate(x, y);
+      this.path.relativeQuadraticBezierTo(cp.dx - _currentPoint.dx,
+          cp.dy - _currentPoint.dy, x as double, y as double);
+      _currentPoint = _currentPoint.translate(x, y);
     }
 
     _lastCommand = commandToken;
@@ -326,7 +326,7 @@ class Parser {
           rotation: theta as double,
           largeArc: fa,
           clockwise: fb);
-      _currentPoint.translate(x, y);
+      _currentPoint = _currentPoint.translate(x, y);
     }
 
     _lastCommand = commandToken;
