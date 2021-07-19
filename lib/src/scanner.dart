@@ -50,7 +50,7 @@ class Scanner {
       RegExp(r'[+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?');
 
   /// The [RegExp] pattern to match a boolean flag (`1` or `0`).
-  static final flagPattern = RegExp(r'(0|1)(?=[,\s])');
+  static final flagPattern = RegExp(r'(0|1)');
 
   /// Queue of tokens generated to be returned.
   final _tokens = Queue<Token>();

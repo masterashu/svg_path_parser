@@ -1,8 +1,13 @@
+## [1.1.1] - 19-July-2021
+
+* Allow Flags without separators in cubic Bézier curves
+  see details here: [issue#6](https://github.com/masterashu/svg_path_parser/issues/6)
+
 ## [1.1.0] - 19-July-2021
 
 * Fixed an issue where using an absolute command after 
   a relative command will lead to wrong parsing behavior.  
-  See details here: [issue#6](https://github.com/masterashu/svg_path_parser/issues/6)
+  See details here: [issue#7](https://github.com/masterashu/svg_path_parser/issues/7)
 
 ## [1.0.0] - 7-March-2021
 
