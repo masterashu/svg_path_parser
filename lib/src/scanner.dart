@@ -44,6 +44,9 @@ class Scanner {
   /// starting with decimal (.3) and exponent notation (1.3e+4).
   static final floatPattern = RegExp(r'[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?');
 
+  /// TODO: update floatPattern to handle this specialCase
+  static final doubleZeros = RegExp(r'00');
+
   /// The [RegExp] pattern to match a valid non-negative float value. Allowed float
   /// values include starting with decimal (.3) and exponent notation (1.3e+4).
   static final nonNegativeFloatPattern =
@@ -271,6 +274,7 @@ class Scanner {
       _fetchFlag();
       _fetchSeparator();
       _fetchSingleCoordinatePair();
+      _fetchSingleSeparator();
     } while (!isDone && !_isCommand);
   }
 
@@ -352,7 +356,10 @@ class Scanner {
 
   /// scans the source and generates a [ValueToken].
   double? _scanFloatValue() {
-    if (_scanner.matches(floatPattern)) {
+    if (_scanner.matches(doubleZeros)) {
+      _scanner.scanChar(NUMBER_0);
+      return 0;
+    } else if (_scanner.matches(floatPattern)) {
       _scanner.scan(floatPattern);
       return double.parse(_scanner.lastMatch!.group(0)!);
     } else {

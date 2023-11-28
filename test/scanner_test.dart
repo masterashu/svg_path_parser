@@ -55,6 +55,14 @@ main() {
         expect(scanner.scan(), ValueToken(TokenType.value, 2.0));
         expect(scanner.scan(), ValueToken(TokenType.value, 4.0));
       });
+
+      test("moveTo when first argument is zero", () {
+        var scanner = Scanner('m00')..scan();
+        expect(scanner.scan(),
+            CommandToken(TokenType.moveTo, CoordinateType.relative));
+        expect(scanner.scan(), ValueToken(TokenType.value, 0.0));
+        expect(scanner.scan(), ValueToken(TokenType.value, 0.0));
+      });
     });
 
     group("lineTo command", () {
