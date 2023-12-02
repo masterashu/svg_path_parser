@@ -1,3 +1,7 @@
+## [1.1.2] - 03-December-2023
+
+* Fix issue with shorthand control points calc
+
 ## [1.1.1] - 19-July-2021
 
 * Allow Flags without separators in cubic Bézier curves
